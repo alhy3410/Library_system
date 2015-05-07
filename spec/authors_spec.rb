@@ -50,8 +50,19 @@ describe('Authors') do
       new_author.delete()
       expect(Authors.all()).to(eq([new_author2]))
     end
-
-
   end
 
+  describe('#books') do
+    it('will show the books the author has written') do
+      new_author = Authors.new({:name => "Jim Johnson"})
+      new_author.save()
+      new_book = Books.new({:name => "The days of new"})
+      new_book.save()
+      new_book2 = Books.new({:name => "The lion king"})
+      new_book2.save()
+      new_author.update({:books_id => [new_book.id(), new_book2.id()]})
+      expect(new_author.books()).to(eq([new_book, new_book2]))
+    end
+  end
+  
 end
